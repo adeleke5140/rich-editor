@@ -34,7 +34,14 @@ export const TipTapEditorExtensions = [
     },
   }),
   Placeholder.configure({
-    placeholder: 'Press / for commands...',
+    placeholder: ({ node }) => {
+      if (node.type.name === 'heading') {
+        return `Heading ${node.attrs.level}`;
+      } else if (node.type.name === 'paragraph') {
+        return 'Press / for commands, or enter some text';
+      }
+      return 'Press / for commands';
+    },
     includeChildren: true,
   }),
   SlashCommand,
