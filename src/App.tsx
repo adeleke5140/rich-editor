@@ -1,15 +1,35 @@
-import './App.css';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import { useEditor, EditorContent } from '@tiptap/react';
-import { useState, useEffect } from 'react';
+import { Editor } from '@tiptap/core';
+import { getSuggestionItems } from './components/items';
+import { renderItems } from './components/renderItems';
+import { Commands } from './components/Command';
+import { useState } from 'react';
+
+const SlashCommand = Commands.configure({
+  suggestion: {
+    items: getSuggestionItems,
+    render: renderItems,
+  },
+});
 
 export const TipTapEditorExtensions = [
   StarterKit.configure({
     heading: {
-      levels: [1],
+      levels: [1, 2, 3],
       HTMLAttributes: {
-        class: 'text-purple-20-',
+        class: 'text-white',
+      },
+    },
+    paragraph: {
+      HTMLAttributes: {
+        class: 'text-white',
+      },
+    },
+    listItem: {
+      HTMLAttributes: {
+        class: 'text-white',
       },
     },
   }),
@@ -17,30 +37,38 @@ export const TipTapEditorExtensions = [
     placeholder: 'Start typing...',
     includeChildren: true,
   }),
+  SlashCommand,
 ];
 
 function App() {
+  const [content, setContent] = useState<ReturnType<Editor['getJSON']> | null>(
+    null
+  );
+
+  const updateContent = (editor: Editor) => {
+    const json = editor.getJSON();
+
+    setContent(json);
+  };
   const editor = useEditor({
     extensions: [...TipTapEditorExtensions],
-    content: '<p>Start Writing...</p>',
+    content: content,
     editorProps: {
       attributes: {
-        class: 'h-full text-left p-2 focus:outline-none',
+        class:
+          'h-full text-white prose prose-headings:font-display text-left p-2 focus:outline-none',
       },
     },
     onUpdate: ({ editor }) => {
-      console.log(editor.getJSON());
+      updateContent(editor);
     },
   });
   return (
-    <>
-      <p className="text-4xl font-serif text-purple-200">
-        This is my Rich Editor
-      </p>
-      <div className="max-w-80 h-40 rounded bg-white text-black">
+    <div className="p-2 max-w-2xl mx-auto min-h-screen">
+      <div className="space-y-4 text-white">
         <EditorContent editor={editor} className="h-full" />
       </div>
-    </>
+    </div>
   );
 }
 
