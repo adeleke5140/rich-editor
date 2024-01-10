@@ -24,7 +24,6 @@ export const Commands = Extension.create({
         command: ({ editor, range, props }: Command) => {
           props.command({ editor, range });
         },
-        statusbar: true,
       },
     };
   },
