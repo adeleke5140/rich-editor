@@ -61,11 +61,6 @@ export const CommandList = ({
 
       selectedButton.focus();
     }
-    if (selectedIndex === 0 && items.length > 0) {
-      setTimeout(() => {
-        selectedButtonRef.current?.focus();
-      }, 10);
-    }
   }, [selectedIndex, items]);
 
   return items.length > 0 ? (
