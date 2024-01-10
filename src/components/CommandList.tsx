@@ -54,12 +54,17 @@ export const CommandList = ({
 
   useEffect(() => {
     const container = commandListContainer.current;
-    const item = selectedButtonRef.current;
+    const selectedButton = selectedButtonRef.current;
 
-    if (item && container) {
-      container.scrollTop = item.offsetTop - container.offsetTop;
+    if (container && selectedButton) {
+      container.scrollTop = selectedButton.offsetTop - container.offsetTop;
 
-      item.focus();
+      selectedButton.focus();
+    }
+    if (selectedIndex === 0 && items.length > 0) {
+      setTimeout(() => {
+        selectedButtonRef.current?.focus();
+      }, 10);
     }
   }, [selectedIndex, items]);
 
