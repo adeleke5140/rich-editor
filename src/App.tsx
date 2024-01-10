@@ -5,7 +5,7 @@ import { Editor } from '@tiptap/core';
 import { getSuggestionItems } from './components/items';
 import { renderItems } from './components/renderItems';
 import { Commands } from './components/Command';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const SlashCommand = Commands.configure({
   suggestion: {
