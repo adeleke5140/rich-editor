@@ -8,6 +8,9 @@ dependencies:
   '@tailwindcss/typography':
     specifier: ^0.5.10
     version: 0.5.10(tailwindcss@3.4.1)
+  '@tiptap/core':
+    specifier: ^2.1.15
+    version: 2.1.15(@tiptap/pm@2.1.15)
   '@tiptap/extension-placeholder':
     specifier: ^2.1.15
     version: 2.1.15(@tiptap/core@2.1.15)(@tiptap/pm@2.1.15)
@@ -20,6 +23,9 @@ dependencies:
   autoprefixer:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.33)
+  lucide-react:
+    specifier: ^0.307.0
+    version: 0.307.0(react@18.2.0)
   novel:
     specifier: ^0.1.22
     version: 0.1.22(@babel/core@7.23.7)(react@18.2.0)(solid-js@1.8.9)(svelte@4.2.8)(vue@3.4.7)
@@ -4216,6 +4222,14 @@ packages:
 
   /lucide-react@0.244.0(react@18.2.0):
     resolution: {integrity: sha512-PeDVbx5PlIRrVvdxiuSxPfBo7sK5qrL3LbvvRoGVNiHYRAkBm/48lKqoioxcmp0bgsyJs9lMw7CdtGFvnMJbVg==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /lucide-react@0.307.0(react@18.2.0):
+    resolution: {integrity: sha512-+vZ+vUiWPZTMnLHURg4aoIaz6NHOWXVVcVd8iLROu1k4LbyjcnHIKmbjXHCmulz7XAYLWRVXzhJJgIr+Aq3vOg==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:
