@@ -5,7 +5,7 @@ import { Editor } from '@tiptap/core';
 import { getSuggestionItems } from './components/items';
 import { renderItems } from './components/renderItems';
 import { Commands } from './components/Command';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const SlashCommand = Commands.configure({
   suggestion: {
@@ -34,7 +34,7 @@ export const TipTapEditorExtensions = [
     },
   }),
   Placeholder.configure({
-    placeholder: 'Start typing...',
+    placeholder: 'Press / for commands...',
     includeChildren: true,
   }),
   SlashCommand,
@@ -52,7 +52,7 @@ function App() {
   };
   const editor = useEditor({
     extensions: [...TipTapEditorExtensions],
-    content: content,
+    content,
     editorProps: {
       attributes: {
         class:
@@ -64,7 +64,12 @@ function App() {
     },
   });
   return (
-    <div className="p-2 max-w-2xl mx-auto min-h-screen">
+    <div
+      onClick={() => {
+        editor?.chain().focus().run();
+      }}
+      className="p-2 max-w-2xl mx-auto min-h-screen"
+    >
       <div className="space-y-4 text-white">
         <EditorContent editor={editor} className="h-full" />
       </div>
