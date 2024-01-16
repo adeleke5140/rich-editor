@@ -78,7 +78,7 @@ export const EditorBubbleMenu = (props: EditorBubbleMenuProps) => {
     <>
       <BubbleMenu
         {...bubbleMenuProps}
-        className="flex w-fit divide-x divide-stone-200 rounded border border-stone-200 shadow-xl"
+        className="flex w-fit divide-x divide-stone-500 bg-stone-900  rounded border border-stone-500 shadow-xl"
       >
         <NodeSelector
           editor={editor!}
@@ -104,8 +104,13 @@ export const EditorBubbleMenu = (props: EditorBubbleMenuProps) => {
           {items.map((item, index) => (
             <button
               key={index}
-              onClick={item.command}
-              className="p-2 text-stone-600 hover:bg-stone-100 active:bg-stone-200"
+              onClick={() => {
+                item.command();
+                setIsNodeSelectorOpen(false);
+                setIsColorSelectorOpen(false);
+                setIsLinkSelectorOpen(false);
+              }}
+              className="p-2 text-stone-200 hover:bg-stone-800 hover:rounded-md active:bg-stone-200"
               type="button"
             >
               <item.icon
