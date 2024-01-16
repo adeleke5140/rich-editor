@@ -7,6 +7,7 @@ import {
   ListOrdered,
   TextQuote,
   CodeIcon,
+  CheckSquare,
 } from 'lucide-react';
 import { Command } from './Command';
 
@@ -66,6 +67,15 @@ export const getSuggestionItems = ({ query }: { query: string }) => {
           .deleteRange(range)
           .toggleNode('paragraph', 'paragraph')
           .run();
+      },
+    },
+    {
+      title: 'To-do List',
+      description: 'Track tasks with a to-do list.',
+      searchTerms: ['task', 'checkbox', 'todo', 'list', 'check'],
+      icon: <CheckSquare size={14} />,
+      command: ({ editor, range }: Command) => {
+        editor.chain().focus().deleteRange(range).toggleTaskList().run();
       },
     },
     {
