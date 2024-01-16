@@ -1,6 +1,8 @@
 import Suggestion from '@tiptap/suggestion';
 
 import { Extension, Editor, Range } from '@tiptap/core';
+import { getSuggestionItems } from './items';
+import { renderItems } from './renderItems';
 
 export interface CommandItemProps {
   title: string;
@@ -34,5 +36,12 @@ export const Commands = Extension.create({
         ...this.options.suggestion,
       }),
     ];
+  },
+});
+
+export const SlashCommand = Commands.configure({
+  suggestion: {
+    items: getSuggestionItems,
+    render: renderItems,
   },
 });
