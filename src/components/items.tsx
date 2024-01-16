@@ -5,6 +5,9 @@ import {
   Text,
   List,
   ListOrdered,
+  TextQuote,
+  CodeIcon,
+  CheckSquare,
 } from 'lucide-react';
 import { Command } from './Command';
 
@@ -13,6 +16,7 @@ export const getSuggestionItems = ({ query }: { query: string }) => {
     {
       title: 'Heading 1',
       description: 'Big section heading.',
+      searchTerms: ['title', 'big', 'large'],
       icon: <Heading1 size={14} />,
       command: ({ editor, range }: Command) => {
         editor
@@ -26,6 +30,7 @@ export const getSuggestionItems = ({ query }: { query: string }) => {
     {
       title: 'Heading 2',
       description: 'Medium section heading.',
+      searchTerms: ['subtitle', 'medium'],
       icon: <Heading2 size={14} />,
       command: ({ editor, range }: Command) => {
         editor
@@ -39,6 +44,7 @@ export const getSuggestionItems = ({ query }: { query: string }) => {
     {
       title: 'Heading 3',
       description: 'Small section heading.',
+      searchTerms: ['subtitle', 'small'],
       icon: <Heading3 size={14} />,
       command: ({ editor, range }: Command) => {
         editor
@@ -52,6 +58,7 @@ export const getSuggestionItems = ({ query }: { query: string }) => {
     {
       title: 'Text',
       description: 'Just start writing some text',
+      searchTerms: ['p', 'paragraph'],
       icon: <Text size={14} />,
       command: ({ editor, range }: Command) => {
         editor
@@ -63,8 +70,18 @@ export const getSuggestionItems = ({ query }: { query: string }) => {
       },
     },
     {
-      title: 'Bulleted List',
-      description: 'Create a simple bulleted list',
+      title: 'To-do List',
+      description: 'Track tasks with a to-do list.',
+      searchTerms: ['task', 'checkbox', 'todo', 'list', 'check'],
+      icon: <CheckSquare size={14} />,
+      command: ({ editor, range }: Command) => {
+        editor.chain().focus().deleteRange(range).toggleTaskList().run();
+      },
+    },
+    {
+      title: 'BulletList',
+      description: 'Create a simple bullet list',
+      searchTerms: ['unordered', 'point'],
       icon: <List size={14} />,
       command: ({ editor, range }: Command) => {
         editor.chain().focus().deleteRange(range).toggleBulletList().run();
@@ -72,11 +89,47 @@ export const getSuggestionItems = ({ query }: { query: string }) => {
     },
     {
       title: 'Numbered List',
-      description: 'Create a simple numbered list',
+      description: 'Create a list with numbering',
+      searchTerms: ['ordered'],
       icon: <ListOrdered size={14} />,
       command: ({ editor, range }: Command) => {
         editor.chain().focus().deleteRange(range).toggleOrderedList().run();
       },
     },
-  ].filter((item) => item.title.toLowerCase().includes(query.toLowerCase()));
+    {
+      title: 'Quote',
+      description: 'Capture a quote.',
+      searchTerms: ['blockquote', 'quote'],
+      icon: <TextQuote size={14} />,
+      command: ({ editor, range }: Command) => {
+        editor
+          .chain()
+          .focus()
+          .deleteRange(range)
+          .toggleNode('paragraph', 'paragraph')
+          .toggleBlockquote()
+          .run();
+      },
+    },
+    {
+      title: 'Code',
+      description: 'Capture a code snippet.',
+      searchTerms: ['code'],
+      icon: <CodeIcon size={14} />,
+      command: ({ editor, range }: Command) => {
+        editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
+      },
+    },
+  ].filter((item) => {
+    if (typeof query === 'string' && query.length > 0) {
+      const search = query.toLowerCase();
+      return (
+        item.title.toLowerCase().includes(search) ||
+        item.description.toLowerCase().includes(search) ||
+        (item.searchTerms &&
+          item.searchTerms.some((term) => term.includes(search)))
+      );
+    }
+    return true;
+  });
 };

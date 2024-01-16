@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --novel-black: rgb(255 255 255);
+  --novel-white: rgb(25 25 25);
+  --novel-stone-50: rgb(35 35 34);
+  --novel-stone-100: rgb(41 37 36);
+  --novel-stone-200: rgb(66 69 71);
+  --novel-stone-300: rgb(112 118 123);
+  --novel-stone-400: rgb(160 167 173);
+  --novel-stone-500: rgb(193 199 204);
+  --novel-stone-600: rgb(212 217 221);
+  --novel-stone-700: rgb(229 232 235);
+  --novel-stone-800: rgb(232 234 235);
+  --novel-stone-900: rgb(240, 240, 241);
+
+  --novel-highlight-default: #000000;
+  --novel-highlight-purple: #3f2c4b;
+  --novel-highlight-red: #5c1a1a;
+  --novel-highlight-yellow: #5c4b1a;
+  --novel-highlight-blue: #1a3d5c;
+  --novel-highlight-green: #1a5c20;
+  --novel-highlight-orange: #5c3a1a;
+  --novel-highlight-pink: #5c1a3a;
+  --novel-highlight-gray: #3a3a3a;
+}
+
 .ProseMirror .is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
@@ -13,5 +38,65 @@
 
 body {
   background-color: #242424;
-  font-family: 'Spectral', serif;
+}
+
+/*
+custom styling for checkboxes
+*/
+
+ul[data-type='taskList'] li > label {
+  margin-right: 0.2rem;
+  user-select: none;
+}
+
+@media screen and (max-width: 768px) {
+  ul[data-type='taskList'] li > label {
+    margin-right: 0.5rem;
+  }
+}
+
+ul[data-type='taskList'] li > label input[type='checkbox'] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--novel-white);
+  margin: 0;
+  cursor: pointer;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 2px;
+  position: relative;
+  top: 5px;
+  border: 2px solid var(--novel-stone-900);
+  margin-right: 0.3rem;
+  display: grid;
+  place-content: center;
+
+  &:hover {
+    background-color: var(--novel-stone-50);
+  }
+
+  &:active {
+    background-color: var(--novel-stone-200);
+  }
+
+  &::before {
+    content: '';
+    width: 0.65rem;
+    height: 0.65rem;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em;
+    transform-origin: center;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  }
+
+  &:checked::before {
+    transform: scale(1);
+  }
+}
+
+ul[data-type='taskList'] li[data-checked='true'] > div > p {
+  color: var(--novel-stone-400);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
 }

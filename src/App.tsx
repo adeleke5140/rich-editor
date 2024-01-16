@@ -1,56 +1,44 @@
-import StarterKit from '@tiptap/starter-kit';
-import Placeholder from '@tiptap/extension-placeholder';
 import { useEditor, EditorContent } from '@tiptap/react';
 import { Editor } from '@tiptap/core';
-import { getSuggestionItems } from './components/items';
-import { renderItems } from './components/renderItems';
-import { Commands } from './components/Command';
+
 import { useState } from 'react';
 
-const SlashCommand = Commands.configure({
-  suggestion: {
-    items: getSuggestionItems,
-    render: renderItems,
-  },
-});
+import { EditorBubbleMenu } from './components/editor/bubble-menu';
+import { TipTapEditorExtensions } from './components/editor/extensions';
+import { TipTapEditorProps } from './components/editor/props';
+import applyDevTools from 'prosemirror-dev-tools';
 
-export const TipTapEditorExtensions = [
-  StarterKit.configure({
-    heading: {
-      levels: [1, 2, 3],
-      HTMLAttributes: {
-        class: 'text-white',
-      },
-    },
-    paragraph: {
-      HTMLAttributes: {
-        class: 'text-white',
-      },
-    },
-    listItem: {
-      HTMLAttributes: {
-        class: 'text-white',
-      },
-    },
-  }),
-  Placeholder.configure({
-    placeholder: ({ node }) => {
-      if (node.type.name === 'heading') {
-        return `Heading ${node.attrs.level}`;
-      } else if (node.type.name === 'paragraph') {
-        return 'Press / for commands, or enter some text';
-      }
-      return 'Press / for commands';
-    },
-    includeChildren: true,
-  }),
-  SlashCommand,
+//show prosemirror dev tools
+const DEV_MODE = import.meta.env.DEV;
+
+const searchParams = new URLSearchParams(window.location.search);
+const debugParam = searchParams.get('debug');
+
+//show devtools in dev environment or in dev mode
+const DEBUG = debugParam === 'true' ? debugParam : DEV_MODE;
+
+const fonts = [
+  {
+    name: 'default',
+    fontFamily: 'Atkinson Hyperlegible, sans-serif',
+  },
+  {
+    name: 'serif',
+    fontFamily: 'Spectral, serif',
+  },
+  {
+    name: 'mono',
+    fontFamily: 'Ubuntu Mono, monospace',
+  },
 ];
+
+const defaultFont = fonts[0].fontFamily;
 
 function App() {
   const [content, setContent] = useState<ReturnType<Editor['getJSON']> | null>(
     null
   );
+  const [fontFamily, setFontFamily] = useState(defaultFont);
 
   const updateContent = (editor: Editor) => {
     const json = editor.getJSON();
@@ -58,28 +46,51 @@ function App() {
     setContent(json);
   };
   const editor = useEditor({
+    onCreate({ editor }) {
+      DEBUG ? applyDevTools(editor.view) : null;
+    },
     extensions: [...TipTapEditorExtensions],
     content,
-    editorProps: {
-      attributes: {
-        class:
-          'h-full text-white prose prose-headings:font-display text-left p-2 focus:outline-none',
-      },
-    },
+    editorProps: TipTapEditorProps,
     onUpdate: ({ editor }) => {
       updateContent(editor);
     },
   });
   return (
-    <div
-      onClick={() => {
-        editor?.chain().focus().run();
-      }}
-      className="p-2 max-w-2xl mx-auto min-h-screen"
-    >
-      <div className="space-y-4 text-white">
+    <div className="max-w-screen-lg mx-auto">
+      <div className="ml-auto text-white m-4 space-y-2">
+        <h1 className="font-bold text-lg">Font</h1>
+        <div className="flex gap-2">
+          {fonts.map((font) => (
+            <button
+              key={font.fontFamily}
+              onClick={() => {
+                setFontFamily(font.fontFamily);
+              }}
+              className={`border border-stone-400 p-2 rounded-md text-sm capitalize ${
+                font.fontFamily === fontFamily
+                  ? 'bg-stone-700 text-white font-semibold'
+                  : ''
+              }`}
+            >
+              {font.name}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div
+        onClick={() => {
+          editor?.chain().focus().run();
+        }}
+        className="relative mt-8 p-4 min-h-[500px] w-full max-w-screen-lg border-stone-200 sm:rounded-lg sm:border sm:shadow-lg mx-auto"
+        style={{
+          fontFamily,
+        }}
+      >
+        {editor && <EditorBubbleMenu editor={editor} />}
         <EditorContent editor={editor} className="h-full" />
       </div>
+      <footer className="text-stone-200 mt-2">© kepler</footer>
     </div>
   );
 }
