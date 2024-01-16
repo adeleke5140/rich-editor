@@ -1,0 +1,7 @@
+import { type LucideIcon } from 'lucide-react';
+export interface BubbleMenuItem {
+  name: string;
+  isActive: () => boolean;
+  command: () => void;
+  icon: LucideIcon;
+}
