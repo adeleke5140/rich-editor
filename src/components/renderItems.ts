@@ -20,10 +20,10 @@ export const renderItems = () => {
         getReferenceClientRect: props.clientRect,
         appendTo: () => document.body,
         content: component.element,
+        showOnCreate: true,
         interactive: true,
         trigger: 'manual',
         placement: 'bottom-start',
-        showOnCreate: true,
       });
     },
     onUpdate: (props: { editor: Editor; clientRect: DOMRect }) => {
