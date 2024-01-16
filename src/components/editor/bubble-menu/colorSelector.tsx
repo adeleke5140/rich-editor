@@ -47,13 +47,13 @@ export const ColorSelector = ({
         </Popover.Trigger>
         <Popover.Content
           align="start"
-          className="z-30 my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border border-stone-200 p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+          className="z-30 my-1 bg-stone-800 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border border-stone-200 p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
         >
-          <p className="my-1 px-2 text-sm text-stone-500">Color</p>
+          <p className="my-1 px-2 text-sm text-stone-200 font-medium">Color</p>
           {TEXT_COLORS.map((item, index) => (
             <button
               key={index}
-              className="flex items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100"
+              className="flex items-center text-stone-200 hover:bg-stone-700 justify-between rounded-sm px-2 py-1 text-sm "
               onClick={() => {
                 editor.commands.unsetColor();
                 item.name !== 'Default' &&
@@ -79,7 +79,9 @@ export const ColorSelector = ({
             </button>
           ))}
 
-          <p className="mb-1 mt-2 px-2 text-sm text-stone-500">Background</p>
+          <p className="mb-1 mt-2 px-2 text-sm text-stone-200 font-medium">
+            Background
+          </p>
 
           {HIGHLIGHT_COLORS.map((item, index) => (
             <button
@@ -91,7 +93,7 @@ export const ColorSelector = ({
                 setIsOpen(false);
               }}
               type="button"
-              className="flex items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100"
+              className="flex items-center text-stone-200 hover:bg-stone-700 justify-between rounded-sm px-2 py-1 text-sm "
             >
               <div className="flex items-center space-x-2">
                 <p
