@@ -23,8 +23,8 @@ export const TipTapEditorProps: EditorProps = {
     ) {
       //for uploading images or vidoes or other types of file that are copied and pasted into the editor
       event.preventDefault();
-      const file = event.clipboardData.files[0];
-      const pos = view.state.selection.from;
+      //   const file = event.clipboardData.files[0];
+      //   const pos = view.state.selection.from;
 
       return true;
     }
@@ -38,11 +38,11 @@ export const TipTapEditorProps: EditorProps = {
       event.dataTransfer.files[0]
     ) {
       event.preventDefault();
-      const file = event.dataTransfer.files[0];
-      const coord = view.posAtCoords({
-        left: event.clientX,
-        top: event.clientY,
-      });
+      //   const file = event.dataTransfer.files[0];
+      //   const coord = view.posAtCoords({
+      //     left: event.clientX,
+      //     top: event.clientY,
+      //   });
 
       //upload dropped file
       return true;
