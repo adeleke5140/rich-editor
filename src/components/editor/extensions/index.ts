@@ -99,10 +99,15 @@ export const TipTapEditorExtensions = [
   }),
   TaskList.configure({
     HTMLAttributes: {
-      class: 'novel-not-prose novel-pl-2',
+      class: 'not-prose novel-pl-2',
     },
   }),
-  TaskItem,
+  TaskItem.configure({
+    HTMLAttributes: {
+      class: 'flex items-start gap-1 px-2',
+    },
+    nested: true,
+  }),
   TextStyle,
   Color,
   Highlight.configure({
