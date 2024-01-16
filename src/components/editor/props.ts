@@ -15,38 +15,38 @@ export const TipTapEditorProps: EditorProps = {
       }
     },
   },
-  handlePaste: (view, event) => {
-    if (
-      event.clipboardData &&
-      event.clipboardData.files &&
-      event.clipboardData.files[0]
-    ) {
-      //for uploading images or vidoes or other types of file that are copied and pasted into the editor
-      event.preventDefault();
-      //   const file = event.clipboardData.files[0];
-      //   const pos = view.state.selection.from;
+  //   handlePaste: (view, event) => {
+  //     if (
+  //       event.clipboardData &&
+  //       event.clipboardData.files &&
+  //       event.clipboardData.files[0]
+  //     ) {
+  //       //for uploading images or vidoes or other types of file that are copied and pasted into the editor
+  //       event.preventDefault();
+  //       //   const file = event.clipboardData.files[0];
+  //       //   const pos = view.state.selection.from;
 
-      return true;
-    }
-    return false;
-  },
-  handleDrop: (view, event, _slice, moved) => {
-    if (
-      !moved &&
-      event.dataTransfer &&
-      event.dataTransfer.files &&
-      event.dataTransfer.files[0]
-    ) {
-      event.preventDefault();
-      //   const file = event.dataTransfer.files[0];
-      //   const coord = view.posAtCoords({
-      //     left: event.clientX,
-      //     top: event.clientY,
-      //   });
+  //       return true;
+  //     }
+  //     return false;
+  //   },
+  //   handleDrop: (view, event, _slice, moved) => {
+  //     if (
+  //       !moved &&
+  //       event.dataTransfer &&
+  //       event.dataTransfer.files &&
+  //       event.dataTransfer.files[0]
+  //     ) {
+  //       event.preventDefault();
+  //       //   const file = event.dataTransfer.files[0];
+  //       //   const coord = view.posAtCoords({
+  //       //     left: event.clientX,
+  //       //     top: event.clientY,
+  //       //   });
 
-      //upload dropped file
-      return true;
-    }
-    return false;
-  },
+  //       //upload dropped file
+  //       return true;
+  //     }
+  //     return false;
+  //   },
 };
