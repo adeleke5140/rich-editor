@@ -17,10 +17,11 @@ export const LinkSelector = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (isOpen) {
-      inputRef.current?.focus();
+    const input = inputRef.current;
+    if (isOpen && input) {
+      input.focus();
     }
-  }, []);
+  });
 
   return (
     <div className="relative">
@@ -29,7 +30,7 @@ export const LinkSelector = ({
         onClick={() => {
           setIsOpen(!isOpen);
         }}
-        className="flex h-full items-center space-x-2 px-3 py-1.5 text-sm font-medium text-stone-600 hover:bg-stone-100 active:bg-stone-200"
+        className="flex h-full items-center space-x-2 hover:bg-stone-800 hover:rounded-md px-3 py-1.5 text-sm font-medium text-stone-200  active:bg-stone-200"
       >
         <p className="text-base">↗</p>
         <p
@@ -50,14 +51,14 @@ export const LinkSelector = ({
             url && editor.chain().focus().setLink({ href: url }).run();
             setIsOpen(false);
           }}
-          className="fixed top-full z-30 mt-1 flex w-60 overflow-hidden rounded border border-stone-200 p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+          className="fixed top-full z-30 bg-stone-800 mt-1 flex w-60 overflow-hidden rounded border border-stone-200 p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
         >
           <input
             ref={inputRef}
             type="text"
             placeholder="Paste a link"
             defaultValue={editor.getAttributes('link').href || ''}
-            className="flex-1 p-1 text-sm outline-none"
+            className="flex-1 p-1 text-stone-200 bg-stone-700 text-sm outline-none"
           />
           {editor.getAttributes('link').href ? (
             <button
