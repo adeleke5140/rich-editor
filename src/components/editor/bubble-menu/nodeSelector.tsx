@@ -102,7 +102,7 @@ export const NodeSelector = ({
       <div className="relative h-full">
         <Popover.Trigger
           onClick={() => setIsOpen(!isOpen)}
-          className="flex h-full items-center gap-1 whitespace-nowrap p-2 text-sm font-medium text-stone-600 hover:bg-stone-100 active:bg-stone-200"
+          className="flex h-full   items-center gap-1 whitespace-nowrap p-2 text-sm font-medium text-stone-200 hover:bg-stone-800 hover:rounded-md active:bg-stone-200"
         >
           <span>{activeItem.name}</span>
           <ChevronDown className="h-4 w-4" />
@@ -110,7 +110,7 @@ export const NodeSelector = ({
 
         <Popover.Content
           align="start"
-          className="z-30 my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border border-stone-200 p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
+          className="z-30 my-1 bg-stone-800 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border border-stone-200 p-1 shadow-xl animate-in fade-in slide-in-from-top-1"
         >
           {items.map((item, index) => (
             <button
@@ -120,7 +120,7 @@ export const NodeSelector = ({
                 setIsOpen(false);
               }}
               type="button"
-              className="flex items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:novel-bg-stone-100"
+              className="flex items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-200 hover:bg-stone-700"
             >
               <div className="flex items-center space-x-2">
                 <div className="flex items-center space-x-2">
