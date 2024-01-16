@@ -1,51 +1,12 @@
-import StarterKit from '@tiptap/starter-kit';
-import Placeholder from '@tiptap/extension-placeholder';
 import { useEditor, EditorContent } from '@tiptap/react';
 import { Editor } from '@tiptap/core';
-import { getSuggestionItems } from './components/items';
-import { renderItems } from './components/renderItems';
-import { Commands } from './components/Command';
+
 import { useState } from 'react';
 
-const SlashCommand = Commands.configure({
-  suggestion: {
-    items: getSuggestionItems,
-    render: renderItems,
-  },
-});
-
-export const TipTapEditorExtensions = [
-  StarterKit.configure({
-    heading: {
-      levels: [1, 2, 3],
-      HTMLAttributes: {
-        class: 'text-white',
-      },
-    },
-    paragraph: {
-      HTMLAttributes: {
-        class: 'text-white',
-      },
-    },
-    listItem: {
-      HTMLAttributes: {
-        class: 'text-white',
-      },
-    },
-  }),
-  Placeholder.configure({
-    placeholder: ({ node }) => {
-      if (node.type.name === 'heading') {
-        return `Heading ${node.attrs.level}`;
-      } else if (node.type.name === 'paragraph') {
-        return 'Press / for commands, or enter some text';
-      }
-      return 'Press / for commands';
-    },
-    includeChildren: true,
-  }),
-  SlashCommand,
-];
+import { EditorBubbleMenu } from './components/editor/bubble-menu';
+import { TipTapEditorExtensions } from './components/editor/extensions';
+import { TipTapEditorProps } from './components/editor/props';
+import applyDevTools from 'prosemirror-dev-tools';
 
 function App() {
   const [content, setContent] = useState<ReturnType<Editor['getJSON']> | null>(
@@ -58,14 +19,12 @@ function App() {
     setContent(json);
   };
   const editor = useEditor({
+    onCreate({ editor }) {
+      applyDevTools(editor.view);
+    },
     extensions: [...TipTapEditorExtensions],
     content,
-    editorProps: {
-      attributes: {
-        class:
-          'h-full text-white prose prose-headings:font-display text-left p-2 focus:outline-none',
-      },
-    },
+    editorProps: TipTapEditorProps,
     onUpdate: ({ editor }) => {
       updateContent(editor);
     },
@@ -75,11 +34,10 @@ function App() {
       onClick={() => {
         editor?.chain().focus().run();
       }}
-      className="p-2 max-w-2xl mx-auto min-h-screen"
+      className="p-2 relative max-w-2xl mx-auto min-h-screen"
     >
-      <div className="space-y-4 text-white">
-        <EditorContent editor={editor} className="h-full" />
-      </div>
+      {editor && <EditorBubbleMenu editor={editor} />}
+      <EditorContent editor={editor} className="h-full" />
     </div>
   );
 }
