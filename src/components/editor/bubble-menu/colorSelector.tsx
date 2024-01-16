@@ -30,7 +30,10 @@ export const ColorSelector = ({
   return (
     <Popover.Root open={isOpen}>
       <div className="relative h-full">
-        <Popover.Trigger className="flex h-full items-center gap-1 p-2 text-sm font-medium text-stone-600 hover:bg-stone-100 active:bg-stone-200">
+        <Popover.Trigger
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex h-full items-center gap-1 p-2 text-sm font-medium text-stone-600 hover:bg-stone-100 active:bg-stone-200"
+        >
           <span
             className="rounded-md px-1"
             style={{
@@ -50,6 +53,7 @@ export const ColorSelector = ({
           {TEXT_COLORS.map((item, index) => (
             <button
               key={index}
+              className="flex items-center justify-between rounded-sm px-2 py-1 text-sm text-stone-600 hover:bg-stone-100"
               onClick={() => {
                 editor.commands.unsetColor();
                 item.name !== 'Default' &&
