@@ -32,7 +32,7 @@ export const ColorSelector = ({
       <div className="relative h-full">
         <Popover.Trigger
           onClick={() => setIsOpen(!isOpen)}
-          className="flex h-full items-center gap-1 p-2 text-sm font-medium text-stone-600 hover:bg-stone-100 active:bg-stone-200"
+          className="flex h-full items-center gap-1 p-2 text-sm font-medium text-stone-200 hover:bg-stone-800 hover:rounded-md active:bg-stone-200"
         >
           <span
             className="rounded-md px-1"
